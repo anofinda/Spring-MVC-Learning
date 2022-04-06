@@ -1,0 +1,10 @@
+{%extends "base.html"%}
+
+{%block main%}
+{%if user==null%}
+<h3>Welcome!</h3>
+<p style="font-family: 'JetBrains Mono',monospace"><a href="/User/login">Login</a>,<a href="/User/register">Register</a>.</p>
+{%else%}
+<h3>Welcome,<a href="/User/profile">{{user.username}}</a>!</h3>
+{%endif%}
+{%endblock%}

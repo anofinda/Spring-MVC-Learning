@@ -1,0 +1,25 @@
+{%extends "base.html"%}
+
+{%block main%}
+<form method="post" action="/User/register">
+    <h3>Register</h3>
+    {%if error!=null%}
+    <p>{{error}}</p>
+    {%endif%}
+    <div>
+        <label>username</label>
+        <input name="username" type="text">
+    </div>
+    <div>
+        <label>password</label>
+        <input name="password" type="password">
+    </div>
+    <div>
+        <select name="gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+    </div>
+    <input type="submit" value="Register">
+</form>
+{%endblock%}

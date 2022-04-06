@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC Learning</title>
+</head>
+<body>
+    <div style="font-size: 20px; text-align: right; color: cornflowerblue; font-family: 'JetBrains Mono',monospace">
+        {%if user==null%}
+        <span><a href="/User/login">Login</a></span>
+        <span><a href="/User/register">Register</a></span>
+        {%else%}
+        <span>Welcome,<a href="/User/profile">{{user.name}}</a></span>
+        <span><a href="/User/logout">Logout</a></span>
+        {%endif%}
+    </div>
+
+    <div style="text-align: center; font-size: 20px">
+        {%block main%}
+        {%endblock%}
+    </div>
+</body>
+</html>
