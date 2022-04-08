@@ -2,9 +2,9 @@
 
 {%block main%}
 {%if user==null%}
-<h3>Welcome!</h3>
-<p style="font-family: 'JetBrains Mono',monospace"><a href="/User/login">Login</a>,<a href="/User/register">Register</a>.</p>
+<h3>{{ message('welcome') }}!</h3>
+<p style="font-family: 'JetBrains Mono',monospace"><a href="/User/login">{{message('login')}}</a>,<a href="/User/register">{{message('register')}}</a>.</p>
 {%else%}
-<h3>Welcome,<a href="/User/profile">{{user.username}}</a>!</h3>
+<h3>{{ message('welcome') }},<a href="/User/profile">{{user.username}}</a>!</h3>
 {%endif%}
 {%endblock%}

@@ -7,11 +7,11 @@
 <body>
     <div style="font-size: 20px; text-align: right; color: cornflowerblue; font-family: 'JetBrains Mono',monospace">
         {%if user==null%}
-        <span><a href="/User/login">Login</a></span>
-        <span><a href="/User/register">Register</a></span>
+        <span><a href="/User/login">{{message('login')}}</a></span>
+        <span><a href="/User/register">{{message('register')}}</a></span>
         {%else%}
-        <span>Welcome,<a href="/User/profile">{{user.name}}</a></span>
-        <span><a href="/User/logout">Logout</a></span>
+        <span>{{message('welcome')}},<a href="/User/profile">{{user.name}}</a></span>
+        <span><a href="/User/logout">{{message('logout')}}</a></span>
         {%endif%}
     </div>
 

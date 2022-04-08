@@ -16,7 +16,9 @@ import org.apache.catalina.webresources.StandardRoot;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,15 +28,20 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.File;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * @author dongyudeng
@@ -85,16 +92,38 @@ public class AppConfig {
                 for (var interceptor : interceptors) {
                     registry.addInterceptor(interceptor);
                 }
+                var localeInterceptor=new LocaleChangeInterceptor();
+                localeInterceptor.setParamName("lang");
+                registry.addInterceptor(localeInterceptor);
             }
         };
     }
 
+    @Bean("localeResolver")
+    LocaleResolver createLocaleResolver() {
+        var localResolver = new CookieLocaleResolver();
+        localResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        localResolver.setDefaultTimeZone(TimeZone.getDefault());
+        return localResolver;
+    }
+
+    @Bean("i18n")
+    MessageSource createMessageSource() {
+        var messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
     @Bean
-    ViewResolver createViewResolver(@Autowired ServletContext servletContext) {
+    SpringExtension createSpringExtension(@Autowired @Qualifier("i18n") MessageSource messageSource){
+        return new SpringExtension(messageSource);
+    }
+    @Bean
+    ViewResolver createViewResolver(@Autowired ServletContext servletContext,@Autowired SpringExtension springExtension) {
         PebbleEngine engine = new PebbleEngine.Builder().autoEscaping(true)
                 .cacheActive(true)
                 .loader(new ServletLoader(servletContext))
-                .extension(new SpringExtension(new ResourceBundleMessageSource()))
+                .extension(springExtension)
                 .build();
         PebbleViewResolver viewResolver = new PebbleViewResolver(engine);
         viewResolver.setPrefix("/WEB-INF/templates/");
