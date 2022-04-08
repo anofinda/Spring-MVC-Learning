@@ -1,7 +1,7 @@
-package com.example.Services;
+package com.example.services;
 
-import com.example.Mappers.UserMapper;
 import com.example.entity.User;
+import com.example.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,15 +1,11 @@
-package com.example.Controllers;
+package com.example.controllers;
 
-import com.example.Services.UserService;
 import com.example.entity.User;
+import com.example.exceptions.ProfileException;
+import com.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -88,9 +84,12 @@ public class UserController {
     public ModelAndView profile(HttpSession session) {
         User user = (User) session.getAttribute("NOW_USER");
         if (user == null) {
-            return new ModelAndView("redirect:/User/login");
+            throw new ProfileException("no User");
         }
         return new ModelAndView("profile.html", Map.of("user", user));
     }
-
+    @ExceptionHandler(ProfileException.class)
+    private ModelAndView handleProfileException(){
+        return new ModelAndView("redirect:/User/login");
+    }
 }

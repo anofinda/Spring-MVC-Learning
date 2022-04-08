@@ -25,8 +25,10 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -71,11 +73,18 @@ public class AppConfig {
     }
 
     @Bean
-    WebMvcConfigurer createWebMvcConfigurer() {
+    WebMvcConfigurer createWebMvcConfigurer(@Autowired HandlerInterceptor[] interceptors) {
         return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+            }
+
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                for (var interceptor : interceptors) {
+                    registry.addInterceptor(interceptor);
+                }
             }
         };
     }
@@ -94,16 +103,16 @@ public class AppConfig {
     }
 
     public static void main(String[] args) throws LifecycleException {
-        Tomcat tomcat=new Tomcat();
-        tomcat.setPort(Integer.getInteger("port",8080));
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(Integer.getInteger("port", 8080));
         tomcat.getConnector();
-        Context context=tomcat.addWebapp("",new File("src/main/webapp").getAbsolutePath());
+        Context context = tomcat.addWebapp("", new File("src/main/webapp").getAbsolutePath());
         WebResourceRoot resources = new StandardRoot(context);
         resources.addPreResources(
                 new DirResourceSet(resources, "/WEB-INF/classes", new File("target/classes").getAbsolutePath(), "/"));
         context.setResources(resources);
         tomcat.start();
-        Server server=tomcat.getServer();
+        Server server = tomcat.getServer();
         server.await();
     }
 }
