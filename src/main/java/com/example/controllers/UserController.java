@@ -20,6 +20,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/User")
 public class UserController {
+    public static final String NOW_USER="__user__";
     @Autowired
     UserService userService;
 
