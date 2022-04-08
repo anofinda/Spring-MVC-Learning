@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
@@ -19,7 +18,6 @@ public class DatabaseInitializer {
     public void init() throws SQLException {
         try(var connection=dataSource.getConnection()){
             try(var statement=connection.createStatement()){
-
                 statement.executeUpdate("DROP TABLE IF EXISTS users");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS users ("
                         + "id BIGINT IDENTITY NOT NULL PRIMARY KEY, "
