@@ -24,6 +24,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -79,6 +80,14 @@ public class AppConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    @Order(2)
+    @Bean
+    HandlerInterceptor createLocaleInterceptor(){
+        var localeInterceptor=new LocaleChangeInterceptor();
+        localeInterceptor.setParamName("lang");
+        return localeInterceptor;
+    }
+
     @Bean
     WebMvcConfigurer createWebMvcConfigurer(@Autowired HandlerInterceptor[] interceptors) {
         return new WebMvcConfigurer() {
@@ -90,11 +99,15 @@ public class AppConfig {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 for (var interceptor : interceptors) {
-                    registry.addInterceptor(interceptor);
+                    String interceptorName=interceptor.getClass().getSimpleName();
+                    if(interceptorName.startsWith("Api")){
+                        registry.addInterceptor(interceptor).addPathPatterns("/Api/*");
+                    }else if(interceptorName.startsWith("User")){
+                        registry.addInterceptor(interceptor).addPathPatterns("/User/*");
+                    }else {
+                        registry.addInterceptor(interceptor);
+                    }
                 }
-                var localeInterceptor=new LocaleChangeInterceptor();
-                localeInterceptor.setParamName("lang");
-                registry.addInterceptor(localeInterceptor);
             }
         };
     }

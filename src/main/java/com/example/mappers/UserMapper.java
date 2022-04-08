@@ -3,6 +3,8 @@ package com.example.mappers;
 import com.example.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * @author dongyudeng
  */
@@ -20,4 +22,10 @@ public interface UserMapper {
 
     @Update("UPDATE users SET password=#{password} WHERE id=#{id}")
     void updatePassword(@Param("password")String password,@Param("id")long id);
+
+    @Select("SELECT * FROM users")
+    List<User> getUsers();
+
+    @Select("SELECT COUNT(*) FROM users")
+    long getUserNumber();
 }

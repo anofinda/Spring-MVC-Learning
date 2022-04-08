@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Order(1)
 @Component
-public class LoggerInterceptor implements HandlerInterceptor {
+public class UserLoggerInterceptor implements HandlerInterceptor {
     final Logger logger= LoggerFactory.getLogger(getClass());
 
     @Override

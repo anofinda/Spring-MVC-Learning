@@ -18,6 +18,7 @@
         <spring.version>5.3.17</spring.version>
         <junit.version>5.8.2</junit.version>
         <tomcat.embed.version>9.0.60</tomcat.embed.version>
+        <jackson.version>2.13.2.2</jackson.version>
     </properties>
     <dependencies>
         <!--spring全家桶-->
@@ -80,6 +81,12 @@
             <groupId>io.pebbletemplates</groupId>
             <artifactId>pebble-spring5</artifactId>
             <version>3.1.5</version>
+        </dependency>
+        <!--jackson json-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <!--slf4j与logback日志-->
         <dependency>
