@@ -18,7 +18,7 @@ public interface UserMapper {
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("INSERT INTO users (username,password,email,gender) VALUES (#{user.username},#{user.password},#{user.email},#{user.gender})")
-    void InsertUser(@Param("user") User user);
+    void insertUser(@Param("user") User user);
 
     @Update("UPDATE users SET password=#{password} WHERE id=#{id}")
     void updatePassword(@Param("password")String password,@Param("id")long id);
