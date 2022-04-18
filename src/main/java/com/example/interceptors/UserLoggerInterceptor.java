@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 /**
  * @author dongyudeng
  */
-@Order(1)
+@Order(2)
 @Component
 public class UserLoggerInterceptor implements HandlerInterceptor {
-    final Logger logger= LoggerFactory.getLogger(getClass());
+    private final Logger logger= LoggerFactory.getLogger(getClass());
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

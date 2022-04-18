@@ -1,7 +1,7 @@
 package com.example.services;
 
-import com.example.entity.User;
-import com.example.mappers.UserMapper;
+import com.example.entities.User;
+import com.example.mybatisMappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,13 +37,14 @@ public class UserService {
         userMapper.InsertUser(user);
     }
 
-    public void register(String username, String password, String gender) {
+    public void register(String username, String password,String email, String gender) {
         if (userMapper.getUserByName(username) != null) {
             throw new RuntimeException("User exits.");
         }
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setEmail(email);
         user.setGender(gender);
         register(user);
     }

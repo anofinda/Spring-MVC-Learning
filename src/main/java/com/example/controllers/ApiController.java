@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.entity.User;
+import com.example.entities.User;
 import com.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

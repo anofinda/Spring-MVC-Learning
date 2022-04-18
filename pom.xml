@@ -15,16 +15,23 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>17</java.version>
-        <spring.version>5.3.17</spring.version>
+        <spring.version>5.3.19</spring.version>
         <junit.version>5.8.2</junit.version>
         <tomcat.embed.version>9.0.60</tomcat.embed.version>
-        <jackson.version>2.13.2.2</jackson.version>
+        <jackson.version>2.13.2</jackson.version>
+        <java.mail.version>1.6.2</java.mail.version>
+        <netty.version>4.1.76.Final</netty.version>
     </properties>
     <dependencies>
         <!--spring全家桶-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -45,6 +52,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <!--javax注解-->
@@ -88,6 +100,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr353</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
         <!--slf4j与logback日志-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -118,6 +135,41 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>${tomcat.embed.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <!--JavaMail-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>${java.mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${java.mail.version}</version>
+        </dependency>
+        <!--jms-->
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <!--ActiveMQ-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jms-client</artifactId>
+            <version>2.21.0</version>
+        </dependency>
+        <!--netty-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-handler-proxy</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
