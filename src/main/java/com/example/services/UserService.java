@@ -34,7 +34,7 @@ public class UserService {
     }
 
     private void register(User user) {
-        userMapper.InsertUser(user);
+        userMapper.insertUser(user);
     }
 
     public void register(String username, String password,String email, String gender) {
