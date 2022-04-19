@@ -34,6 +34,7 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -62,6 +63,7 @@ import java.util.TimeZone;
 @EnableTransactionManagement
 @MapperScan("com.example.mybatisMappers")
 @EnableJms
+@EnableScheduling
 @EnableWebMvc
 public class AppConfig {
 
