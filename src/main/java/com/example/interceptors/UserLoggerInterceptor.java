@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 /**
  * @author dongyudeng
  */
-@Order(2)
+@Order(3)
 @Component
 public class UserLoggerInterceptor implements HandlerInterceptor {
     private final Logger logger= LoggerFactory.getLogger(getClass());
